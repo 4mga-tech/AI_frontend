@@ -14,7 +14,7 @@ function Login() {
     <div className="flex items-center justify-center min-h-screen bg-gray-800">
       <div className="w-full max-w-md bg-gray-800 rounded-lg shadow-lg p-8">
         <h2 className="text-2xl font-bold text-center text-white mb-6">
-          Нэвтрэх
+          Нэвтрэхs
         </h2>
 
         <form onSubmit={handleSubmit} className="space-y-5">
