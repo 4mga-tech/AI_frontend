@@ -19,13 +19,13 @@ const navigate = useNavigate();
   return (
     <div className="bg-gray-900 text-white min-h-screen flex flex-col">
       <section className="relative bg-gray-800">
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center px-6 py-16">
+        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center px-16 py-16">
           <div className="md:w-1/2 mb-8 md:mb-0">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">xopom.com </h1>
+            <h1 className="text-7xl sm:mx-5 md:text-5xl font-semibold mb-4">Хopom.com </h1>
             <p className="text-gray-300 mb-6">
               2010 оны эхээр дуу болгоны дундуур явдаг байсан даа
             </p>
-            <button onClick={goToOffers} className="bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded-lg font-semibold transition">
+            <button onClick={goToOffers} className="bg-blue-600 hover:bg-blue-500 hover:text-black px-6 py-3 rounded-lg font-semibold items-center hover:scale-110  transform transition">
               Эхлэх
             </button>
           </div>
@@ -50,7 +50,7 @@ const navigate = useNavigate();
               <img
                 src={movie.img}
                 alt={movie.title}
-                className="w-full h-64 object-cover"
+                className="w-full h-64 object-cover hover:cursor-pointer"
               />
               <div className="p-4">
                 <h3 className="text-xl font-semibold">{movie.title}</h3>

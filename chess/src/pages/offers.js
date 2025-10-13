@@ -3,46 +3,106 @@ import React, { useState } from "react";
 function Offers() {
   const [genre, setGenre] = useState("");
   const [message, setMessage] = useState("");
+  const [aiResponse, setAiResponse] = useState([]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (genre.trim() === "") {
+
+    if (!genre.trim()) {
       setMessage("Та төрөлөө оруулна уу.");
       return;
     }
-    setMessage(`Таны дуртай төрөл: "${genre}"! Бид танд санал болгож болох кино жагсаалт бэлдэнэ 🎬`);
+
+    setMessage(`Таны дуртай төрөл: "${genre}"! AI-аас санал авч байна... 🎬`);
+    setAiResponse([]);
+
+    try {
+      const res = await fetch("http://localhost:8000/ask-ai", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ question: genre }),
+      });
+
+      const data = await res.json();
+
+      if (Array.isArray(data.answer)) {
+        setAiResponse(data.answer);
+        setMessage("");
+      } else {
+        setMessage(data.answer);
+      }
+    } catch (error) {
+      console.error(error);
+      setMessage("⚠️ Серверээс хариу авч чадсангүй.");
+    }
+
     setGenre("");
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white flex flex-col items-center p-6">
-      <h2 className="text-2xl font-bold mb-6">Кино санал болгоё 🎉</h2>
+    <div className="min-h-screen bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 text-white flex flex-col items-center p-6">
+      <h2 className="text-3xl md:text-4xl font-extrabold mb-8 text-center">
+        🎬 Кино санал болгоё
+      </h2>
 
       <form
         onSubmit={handleSubmit}
-        className="bg-gray-800 p-6 rounded-lg shadow-md w-full max-w-md space-y-4"
+        className="bg-gray-800 p-6 rounded-2xl shadow-lg w-full max-w-md space-y-4 transition-transform transform hover:scale-105"
       >
-        <label className="block text-gray-300 font-semibold mb-1">
+        <label className="block text-gray-300 font-semibold mb-1 text-lg">
           Та хамгийн дуртай кино төрлөө оруулна уу:
         </label>
         <input
           type="text"
           value={genre}
           onChange={(e) => setGenre(e.target.value)}
-          placeholder="Жишээ: Аймшигтай, Инээдмийн, Уран зөгнөл"
-          className="w-full px-4 py-2 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="Жишээ: Аймшигтай, Инээдмийн"
+          className="w-full px-4 py-3 rounded-xl bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
         />
 
         <button
           type="submit"
-          className="w-full bg-blue-600 hover:bg-blue-700 py-2 rounded-lg font-semibold transition"
+          className="w-full bg-blue-600 hover:bg-blue-700 py-3 rounded-xl font-bold text-lg transition-transform transform hover:scale-105"
         >
           Санал авах
         </button>
       </form>
 
       {message && (
-        <p className="mt-6 text-center text-blue-400 font-medium">{message}</p>
+        <p className="mt-6 text-center text-blue-400 font-medium text-lg">
+          {message}
+        </p>
+      )}
+
+      {aiResponse.length > 0 && (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-8 w-full max-w-6xl">
+          {aiResponse.map((movie, idx) => (
+            <a
+              key={idx}
+              href={movie.imdb_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-gray-800 rounded-2xl overflow-hidden shadow-md hover:shadow-xl transform hover:scale-105 transition-all duration-300"
+            >
+              <img
+  src={movie.poster || "https://via.placeholder.com/300x450/555555/ffffff"}
+  alt={movie.title}
+  className="w-full h-72 sm:h-80 md:h-96 object-cover"
+/>
+
+
+
+              <div className="p-4 text-center">
+                <h3 className="text-white font-bold text-lg md:text-xl mb-2 truncate">
+                  {movie.title}
+                </h3>
+                <p className="text-green-400 font-semibold text-md">
+                  ⭐ {movie.rating}
+                </p>
+              </div>
+            </a>
+          ))}
+        </div>
       )}
     </div>
   );
