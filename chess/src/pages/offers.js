@@ -17,10 +17,10 @@ function Offers() {
     setAiResponse([]);
 
     try {
-      const res = await fetch("http://localhost:8000/ask-ai", {
+      const res = await fetch("http://127.0.0.1:8000/ask-ai", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ question: genre }),
+        body: JSON.stringify({ message: genre }),
       });
 
       const data = await res.json();
