@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import ChatbotButton from "../components/ChatBotButton";
 function Offers() {
   const [genre, setGenre] = useState("");
   const [message, setMessage] = useState("");
@@ -85,11 +85,14 @@ function Offers() {
               className="bg-gray-800 rounded-2xl overflow-hidden shadow-md hover:shadow-xl transform hover:scale-105 transition-all duration-300"
             >
               <img
-  src={movie.poster || "https://via.placeholder.com/300x450/555555/ffffff"}
+  src={
+    movie.poster && movie.poster.startsWith("http")
+      ? movie.poster
+      : "/no-image.png"
+  }
   alt={movie.title}
   className="w-full h-72 sm:h-80 md:h-96 object-cover"
 />
-
 
 
               <div className="p-4 text-center">
@@ -104,6 +107,7 @@ function Offers() {
           ))}
         </div>
       )}
+      <ChatbotButton/>
     </div>
   );
 }
