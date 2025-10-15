@@ -114,12 +114,18 @@ export default function ChatbotButton() {
 
           <div className="flex space-x-2">
             <input
-              type="text"
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              placeholder="Мессеж бичнэ үү..."
-              className="flex-1 px-3 py-2 rounded-xl bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
+  type="text"
+  value={input}
+  onChange={(e) => setInput(e.target.value)}
+  onKeyDown={(e) => {
+    if (e.key === "Enter") {
+      handleSend();
+    }
+  }}
+  placeholder="Мессеж бичнэ үү..."
+  className="flex-1 px-3 py-2 rounded-xl bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+/>
+
             <button
               onClick={handleSend}
               className="bg-blue-600 hover:bg-blue-700 px-3 py-2 rounded-xl font-bold text-white"
