@@ -21,9 +21,9 @@ const navigate = useNavigate();
       <section className="relative bg-gray-800">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center px-16 py-16">
           <div className="md:w-1/2 mb-8 md:mb-0">
-            <h1 className="text-7xl sm:mx-5 md:text-5xl font-semibold mb-4">Хopom.com </h1>
+            <h1 className="text-7xl sm:mx-5 md:text-5xl font-semibold mb-4">Туршилт </h1>
             <p className="text-gray-300 mb-6">
-              2010 оны эхээр дуу болгоны дундуур явдаг байсан даа
+              зүгээр туршилт шдээ гыйхгбхыгбхыүбхүыбхшүбрүшр
             </p>
             <button onClick={goToOffers} className="bg-blue-600 hover:bg-blue-500 hover:text-black px-6 py-3 rounded-lg font-semibold items-center hover:scale-110  transform transition">
               Эхлэх
